@@ -1,0 +1,198 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "User Admin",
+    "description": "This is a user control purpose API",
+    "version": "1.0.0",
+    "contact": {
+      "email": "sidglas@hotmail.com"
+    }
+  },
+  "components": {
+    "schemas": {
+      "Users": {
+        "properties": {
+          "user_Id": {
+            "type": "sring"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": {
+          "user_Id": {}
+        }
+      }
+    }
+  },
+  "paths": {
+    "/users": {
+      "post": {
+        "tags":["Users"],
+        "summary": "Create a User",
+        "descriprion": "Create a new User",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+           "description": "Created User",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "type":"object"
+                },
+                "example":{
+                  "admin": false,
+                  "id": "c3e51f86-99b0-436f-8fc5-0b96adb3a1f8",
+                  "name":"sidswag",
+                  "email":"sidswag@mail.com",
+                  "created_at": "2021-08-07T12:45:52.992Z",
+                  "updated_at": "2021-08-07T14:10:35.992Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Duplicate user",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "type":"object"
+                },
+                "example":{
+                  "error": "User already exists"
+                }
+              }
+            }
+          }
+        },
+        "get": {
+          "parameters":  [{
+            "name" : "user_Id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Display user profile"
+          }] ,
+          "summary": "Return all users",
+          "tags":["Users"],        
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content":{
+                "application/json":{
+                  "schema":{
+                    "type":"object"
+                  },
+                  "example":{
+                    "admin": false,
+                    "id": "c3e51f86-99b0-436f-8fc5-0b96adb3a1f8",
+                    "name":"sidAll",
+                    "email":"sidswag@mail.com",
+                    "created_at": "2021-08-07T12:45:52.992Z",
+                    "updated_at": "2021-08-07T14:10:35.992Z"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Should not be able to a non existing/not admin user get list of all users"
+            }
+          }
+        }
+      }
+    },
+    "/users/{user_Id}": {
+      "get": {
+        "summary": "Return user",
+        "tags":["Users"],        
+        "parameters": [{
+           "name" : "user_Id",
+           "in": "path",
+           "schema": {
+             "type": "string"
+           },
+           "required": true,
+           "description": "Display user profile"
+        }],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "type":"object"
+                },
+                "example":{
+                  "admin": false,
+                  "id": "c3e51f86-99b0-436f-8fc5-0b96adb3a1f8",
+                  "name":"sidswag",
+                  "email":"sidswag@mail.com",
+                  "created_at": "2021-08-07T12:45:52.992Z",
+                  "updated_at": "2021-08-07T14:10:35.992Z"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/users/{user_Id}/admin": {
+      "patch": {
+        "summary": "Return user",
+        "tags":["Users"],        
+        "parameters": [{
+           "name" : "user_Id",
+           "in": "path",
+           "schema": {
+             "type": "string"
+           },
+           "required": true,
+           "description": "Changes user profile"
+        }],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "type":"object"
+                },
+                "example":{
+                  "admin": true,
+                  "id": "c3e51f86-99b0-436f-8fc5-0b96adb3a1f8",
+                  "name":"sidswag",
+                  "email":"sidswag@mail.com",
+                  "created_at": "2021-08-07T12:45:52.992Z",
+                  "updated_at": "2021-08-08T14:10:35.992Z"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    }
+  }
+}
