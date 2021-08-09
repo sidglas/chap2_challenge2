@@ -12,11 +12,23 @@
     "schemas": {
       "Users": {
         "properties": {
+          "admin": "boolean",
           "user_Id": {
-            "type": "sring"
+            "type": "string"
           },
           "name": {
             "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "created-at": {
+            "type": "string",
+            "format": "date"
+          },
+          "ted-at": {
+            "type": "string",
+            "format": "date"
           }
         },
         "required": {
@@ -27,6 +39,7 @@
   },
   "paths": {
     "/users": {
+
       "post": {
         "tags":["Users"],
         "summary": "Create a User",
@@ -80,45 +93,74 @@
               }
             }
           }
-        },
-        "get": {
-          "parameters":  [{
-            "name" : "user_Id",
-            "schema": {
-              "type": "string"
-            },
-            "required": true,
-            "description": "Display user profile"
-          }] ,
-          "summary": "Return all users",
-          "tags":["Users"],        
-          "responses": {
-            "200": {
-              "description": "Success",
-              "content":{
-                "application/json":{
-                  "schema":{
-                    "type":"object"
-                  },
-                  "example":{
-                    "admin": false,
-                    "id": "c3e51f86-99b0-436f-8fc5-0b96adb3a1f8",
-                    "name":"sidAll",
-                    "email":"sidswag@mail.com",
-                    "created_at": "2021-08-07T12:45:52.992Z",
-                    "updated_at": "2021-08-07T14:10:35.992Z"
+        }
+      },
+
+      "get":{
+        "tags": ["Users"],
+        "summary": "Lists all users",
+        "parameters": [{
+          "in": "header",
+          "name": "user_id",
+          "required": true,
+          "schema":{
+            "type":"string"
+          }
+        }],
+        "description": "returns all users",
+        "responses":{
+          "200":{
+            "description": "successful users list",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "type": "array",
+                  "items":{
+                    "type": "object"
                   }
+                },
+                "example":[{
+                  
+                  "admin": false,
+                  "id": "a32d8159-56ef-4d46-a595ff748116",
+                  "name":"example",
+                  "email":"example@mail.com",
+                  "created_at": "2021-08-07T21:55:11.152Z",
+                  "updated_at": "2021-08-07T21:55:11.152Z"
+
+                },
+                {
+                  
+                  "admin": true,
+                  "id": "a32d8159-56ef-4d46-a595ff748116",
+                  "name":"example",
+                  "email":"example@mail.com",
+                  "created_at": "2021-08-07T21:55:11.152Z",
+                  "updated_at": "2021-08-07T21:55:11.152Z"
+
+                }
+              ]}
+            }
+          },
+          "400":{
+            "description": "Should not be able to a non existing/not admin user get list of all users",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "type":"object"
+                },
+                "example":{
+                  "error": "Should not be able to a non existing/not admin user get list of all users"
                 }
               }
-            },
-            "400": {
-              "description": "Should not be able to a non existing/not admin user get list of all users"
             }
           }
         }
       }
     },
+
     "/users/{user_Id}": {
+
       "get": {
         "summary": "Return user",
         "tags":["Users"],        
@@ -137,15 +179,15 @@
             "content":{
               "application/json":{
                 "schema":{
-                  "type":"object"
+                  "type": "object"
                 },
                 "example":{
                   "admin": false,
                   "id": "c3e51f86-99b0-436f-8fc5-0b96adb3a1f8",
                   "name":"sidswag",
                   "email":"sidswag@mail.com",
-                  "created_at": "2021-08-07T12:45:52.992Z",
-                  "updated_at": "2021-08-07T14:10:35.992Z"
+                  "created_at": "2021-08-07T12:45:52.553Z",
+                  "updated_at": "2021-08-07T14:10:35.553Z"
                 }
               }
             }
@@ -156,7 +198,9 @@
         }
       }
     },
+
     "/users/{user_Id}/admin": {
+
       "patch": {
         "summary": "Return user",
         "tags":["Users"],        
@@ -182,8 +226,8 @@
                   "id": "c3e51f86-99b0-436f-8fc5-0b96adb3a1f8",
                   "name":"sidswag",
                   "email":"sidswag@mail.com",
-                  "created_at": "2021-08-07T12:45:52.992Z",
-                  "updated_at": "2021-08-08T14:10:35.992Z"
+                  "created_at": "2021-08-07T12:45:52.553Z",
+                  "updated_at": "2021-08-08T14:10:35.553Z"
                 }
               }
             }
